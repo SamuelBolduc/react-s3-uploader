@@ -13,6 +13,8 @@ var ReactS3Uploader = React.createClass({
         onError: React.PropTypes.func,
         signingUrlHeaders: React.PropTypes.object,
         signingUrlQueryParams: React.PropTypes.object,
+        signingUrlFilenameQueryParam: React.PropTypes.string,
+        signingUrlFiletypeQueryParam: React.PropTypes.string,
         uploadRequestHeaders: React.PropTypes.object
     },
 
@@ -39,6 +41,8 @@ var ReactS3Uploader = React.createClass({
             onError: this.props.onError,
             signingUrlHeaders: this.props.signingUrlHeaders,
             signingUrlQueryParams: this.props.signingUrlQueryParams,
+            signingUrlFilenameQueryParam: this.props.signingUrlFilenameQueryParam,
+            signingUrlFiletypeQueryParam: this.props.signingUrlFiletypeQueryParam,
             uploadRequestHeaders: this.props.uploadRequestHeaders
         });
     },
