@@ -23,6 +23,8 @@ From Browser
         onFinish={this.onUploadFinish}
         signingUrlHeaders={{ additional: headers }}
         signingUrlQueryParams={{ additional: query-params }}
+        signingUrlFilenameQueryParam="objectName"
+        signingUrlFiletypeQueryParam="contentType"
         uploadRequestHeaders={{ 'x-amz-acl', 'public-read' }} />
 
 The above example shows all supported `props`.  For `uploadRequestHeaders`, the default ACL is shown.
