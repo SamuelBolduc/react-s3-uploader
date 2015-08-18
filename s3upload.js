@@ -88,7 +88,7 @@ S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
                 this.onError('Invalid signing server response JSON: ' + xhr.responseText);
                 return false;
             }
-            return callback(result);
+            return callback(result.data);
         } else if (xhr.readyState === 4 && xhr.status !== 200) {
             return this.onError('Could not contact request signing server. Status = ' + xhr.status);
         }
@@ -97,6 +97,7 @@ S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
 };
 
 S3Upload.prototype.uploadToS3 = function(file, signResult) {
+
     var signedUrlKey = this.signedUrlKey || 'signedUrl';
     var xhr = this.createCORSRequest('PUT', signResult[signedUrlKey]);
     if (!xhr) {
