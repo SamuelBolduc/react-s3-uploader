@@ -18,6 +18,10 @@ S3Upload.prototype.onError = function(status) {
     return console.log('base.onError()', status);
 };
 
+S3Upload.prototype.beforeUpload = function(files, cb) {
+    cb(files);
+};
+
 function S3Upload(options) {
     if (options == null) {
         options = {};
@@ -31,14 +35,14 @@ function S3Upload(options) {
 }
 
 S3Upload.prototype.handleFileSelect = function(fileElement) {
-    this.onProgress(0, 'Upload started.');
-    var files = fileElement.files;
-    var result = [];
-    for (var i=0; i < files.length; i++) {
-        var f = files[i];
-        result.push(this.uploadFile(f));
-    }
-    return result;
+    this.beforeUpload(fileElement.files, function(files) {
+        this.onProgress(0, 'Upload started.');
+        var result = [];
+        for (var i=0; i < files.length; i++) {
+            var f = files[i];
+            result.push(this.uploadFile(f));
+        }
+    });
 };
 
 S3Upload.prototype.createCORSRequest = function(method, url) {
@@ -98,8 +102,8 @@ S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
 
 S3Upload.prototype.uploadToS3 = function(file, signResult) {
 
-    var signedUrlKey = this.signedUrlKey || 'signedUrl';
-    var xhr = this.createCORSRequest('PUT', signResult[signedUrlKey]);
+    var signingUrlKey = this.signingUrlKey || 'signedUrl';
+    var xhr = this.createCORSRequest('PUT', signResult[signingUrlKey]);
     if (!xhr) {
         this.onError('CORS not supported');
     } else {
