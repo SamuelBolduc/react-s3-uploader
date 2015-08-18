@@ -97,7 +97,8 @@ S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
 };
 
 S3Upload.prototype.uploadToS3 = function(file, signResult) {
-    var xhr = this.createCORSRequest('PUT', signResult.signedUrl);
+    var signedUrlKey = this.signedUrlKey || 'signedUrl';
+    var xhr = this.createCORSRequest('PUT', signResult[signedUrlKey]);
     if (!xhr) {
         this.onError('CORS not supported');
     } else {
