@@ -35,14 +35,14 @@ function S3Upload(options) {
 }
 
 S3Upload.prototype.handleFileSelect = function(fileElement) {
-    this.beforeUpload.call(this, fileElement.files, function(files) {
+    this.beforeUpload(fileElement.files, function(files) {
         this.onProgress(0, 'Upload started.');
         var result = [];
         for (var i=0; i < files.length; i++) {
             var f = files[i];
             result.push(this.uploadFile(f));
         }
-    });
+    }.bind(this));
 };
 
 S3Upload.prototype.createCORSRequest = function(method, url) {
